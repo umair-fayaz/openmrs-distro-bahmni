@@ -277,20 +277,6 @@
 
     <repositories>
         <repository>
-            <id>rubygems-proxy</id>
-            <name>Rubygems Proxy</name>
-            <url>https://rubygems-proxy.torquebox.org/releases</url>
-            <layout>default</layout>
-            <releases>
-                <enabled>true</enabled>
-                <updatePolicy>interval:10080</updatePolicy>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-                <updatePolicy>never</updatePolicy>
-            </snapshots>
-        </repository>
-        <repository>
             <id>sonatype-nexus-snapshots</id>
             <name>Sonatype Nexus Snapshots</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
