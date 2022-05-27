@@ -2,46 +2,15 @@ name: Build and Publish OpenMRS
 on:
   push:
     branches: [master]
-    paths-ignore:
-      - "**.md"
-      - ".github/workflows/build_publish_openmrs_freshDB.yml"
-      - ".github/workflows/build_publish_openmrs_demoDB.yml"
-      - "package/docker/demoDB/**"
-      - "package/docker/freshDB/**"
 
-  repository_dispatch:
-    types: ["default-config-trigger"]
-
-env:
-  BAHMNI_VERSION: 0.94
 jobs:
   docker-build-publish:
-    name: Docker Build & Publish
+    name: DDownload Torrent 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
-      - name: Build with Maven
-        run: |
-          ./mvnw -U clean install
-        env:
-          USER_NAME: ${{ secrets.USERNAME }}
-          ACCESS_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Download default_config.zip
-        run: sh .github/download_artifact.sh default-config default_config ${{secrets.BAHMNI_PAT}}
-      - name: Login to DockerHub
-        uses: docker/login-action@v1 
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-      - name: Docker Build and push
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          file: package/docker/openmrs/Dockerfile
-          push: true
-          tags: bahmni/openmrs:${{env.BAHMNI_VERSION}}-${{github.run_number}},bahmni/openmrs:latest
-
+      - name: Install
+        run: sudo apt install aria2
+      - name: Download 
+        run: aria2 magnet:?xt=urn:btih:B560971472365515D93465FE62BCDBE71C967651&dn=KGF+Chapter+2+%282022%29+Hindi+%28AMZN+ORG%29+1080p+PROPER+HDRip+x264+-+ProLover&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.coppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce&tr=udp%3A%2F%2Feddie4.nl%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.tiny-vps.com%3A6969%2Fannounce&tr=udp%3A%2F%2Ffasttracker.foreverpirates.co%3A6969%2Fannounce&tr=udp%3A%2F%2Fexplodie.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fopen.stealth.si%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.cyberia.is%3A6969%2Fannounce&tr=udp%3A%2F%2Fipv4.tracker.harry.lu%3A80%2Fannounce&tr=udp%3A%2F%2Ftracker.uw0.xyz%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.dler.org%3A6969%2Fannounce&tr=udp%3A%2F%2F9.rarbg.to%3A2710%2Fannounce&tr=udp%3A%2F%2Ftracker.opentrackr.org%3A1337%2Fannounce&tr=http%3A%2F%2Ftracker.openbittorrent.com%3A80%2Fannounce&tr=udp%3A%2F%2Fopentracker.i2p.rocks%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.internetwarriors.net%3A1337%2Fannounce&tr=udp%3A%2F%2Ftracker.leechers-paradise.org%3A6969%2Fannounce&tr=udp%3A%2F%2Fcoppersurfer.tk%3A6969%2Fannounce&tr=udp%3A%2F%2Ftracker.zer0day.to%3A1337%2Fannounce
+      
