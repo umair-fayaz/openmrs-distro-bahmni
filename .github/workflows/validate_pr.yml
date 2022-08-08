@@ -1,11 +1,11 @@
 name: Validate PR
 
 on:
-  pull_request:
+  push:
     branches: [ master ]
     
 jobs:
   build:
     runs-on: ubuntu-18.04
     steps:
-      - run: echo "New Workflow!"
+      - run: echo "another Workflow!"
